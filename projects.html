@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AP Reality | Explore Our Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Additional styles for explore projects page */
+        .page-hero {
+            height: 50vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=600&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 0;
+            padding-top: 80px;
+        }
+        
+        .page-hero-content {
+            color: white;
+            z-index: 2;
+        }
+        
+        .page-hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .search-filter-section {
+            background: var(--bg-secondary);
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .search-filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .search-input-wrapper {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        .search-input-wrapper input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .reset-btn {
+            padding: 12px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .reset-btn:hover {
+            background: var(--accent-color);
+            color: #1e2a3a;
+            border-color: var(--accent-color);
+        }
+        
+        .projects-count {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        
+        .projects-count span {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border-radius: 20px;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .page-btn.active, .page-btn:hover {
+            background: var(--accent-color);
+            color: #1e2a3a;
+            border-color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .page-hero-content h1 {
+                font-size: 2rem;
+            }
+            .search-filter-container {
+                flex-direction: column;
+            }
+            .search-input-wrapper {
+                width: 100%;
+            }
+            .filter-group {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><h1>AP<span>Reality</span></h1></a>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="explore-projects.html" class="active">Explore Projects</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#amenities">Amenities</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero Section -->
+    <section class="page-hero">
+        <div class="page-hero-content animate-fade-up">
+            <h1>Explore Our <span class="highlight">Projects</span></h1>
+            <p>Discover luxury homes crafted with passion and precision across prime locations</p>
+        </div>
+    </section>
+
+    <!-- Search & Filter Section -->
+    <div class="search-filter-section">
+        <div class="container">
+            <div class="search-filter-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search by project name, location, or keyword...">
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="ready">Ready to Move</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="upcoming">Upcoming</option>
+                    </select>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="residential">Residential</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="luxury">Luxury</option>
+                    </select>
+                    <select id="bhkFilter" class="filter-select">
+                        <option value="all">All BHK</option>
+                        <option value="1">1 BHK</option>
+                        <option value="2">2 BHK</option>
+                        <option value="3">3 BHK</option>
+                        <option value="4">4+ BHK</option>
+                    </select>
+                    <button id="resetFilters" class="reset-btn"><i class="fas fa-undo-alt"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Listing Section -->
+    <section class="projects" style="padding-top: 60px;">
+        <div class="container">
+            <div class="projects-count" id="projectsCount">
+                Showing <span id="displayCount">0</span> of <span id="totalCount">0</span> projects
+            </div>
+            <div class="projects-grid" id="allProjectsGrid">
+                <!-- Project 1 -->
+                <div class="project-card" data-name="AP Garden City" data-location="Goregaon" data-status="ready" data-type="residential" data-bhk="2,3,4" data-price="1.8">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=400&h=300&fit=crop" alt="AP Garden City">
+                        <div class="project-tag">Ready to Move</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Garden City</h3>
+                        <p>Goregaon | Luxury apartments with world-class amenities and sprawling greens.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Western Express Highway</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2/3/4 BHK</span>
+                        </div>
+                        <div class="project-price">Starting ₹1.8 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Garden City">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card" data-name="AP Sky City" data-location="Borivali East" data-status="ongoing" data-type="residential" data-bhk="2,3" data-price="2.4">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=400&h=300&fit=crop" alt="AP Sky City">
+                        <div class="project-tag">Ongoing</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Sky City</h3>
+                        <p>Borivali East | Picturesque views, beautifully designed homes, finest amenities.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Sanjay Gandhi National Park</span>
+                            <span><i class="fas fa-subway"></i> Metro Access</span>
+                        </div>
+                        <div class="project-price">Starting ₹2.4 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Sky City">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card" data-name="Three Sixty West" data-location="Worli" data-status="ready" data-type="luxury" data-bhk="3,4" data-price="5.5">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400&h=300&fit=crop" alt="Three Sixty West">
+                        <div class="project-tag">Luxury</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Three Sixty West</h3>
+                        <p>Worli | Uber luxury residences managed by premium hospitality standards.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Bandra Worli Sea Link</span>
+                            <span><i class="fas fa-concierge-bell"></i> Concierge Service</span>
+                        </div>
+                        <div class="project-price">Starting ₹5.5 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="Three Sixty West">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card" data-name="AP Forest Hills" data-location="Thane" data-status="upcoming" data-type="residential" data-bhk="2,3" data-price="1.2">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&h=300&fit=crop" alt="AP Forest Hills">
+                        <div class="project-tag">Upcoming</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Forest Hills</h3>
+                        <p>Thane | Nature-inspired living with lush greenery and serene views.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Yeoor Hills</span>
+                            <span><i class="fas fa-tree"></i> 70% Open Space</span>
+                        </div>
+                        <div class="project-price">Launching Soon</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Forest Hills">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card" data-name="AP Commercial Hub" data-location="Andheri East" data-status="ongoing" data-type="commercial" data-bhk="office" data-price="3.2">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop" alt="AP Commercial Hub">
+                        <div class="project-tag">Commercial</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Commercial Hub</h3>
+                        <p>Andheri East | Premium office spaces with modern infrastructure.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> International Airport</span>
+                            <span><i class="fas fa-building"></i> 50,000+ sqft</span>
+                        </div>
+                        <div class="project-price">Starting ₹3.2 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Commercial Hub">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card" data-name="AP Waterfront Residences" data-location="Palm Beach Road" data-status="upcoming" data-type="luxury" data-bhk="3,4" data-price="7.5">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop" alt="AP Waterfront">
+                        <div class="project-tag">Luxury</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Waterfront Residences</h3>
+                        <p>Palm Beach Road | Sea-facing luxury apartments with private beach access.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Sea Link View</span>
+                            <span><i class="fas fa-ship"></i> Waterfront Living</span>
+                        </div>
+                        <div class="project-price">Starting ₹7.5 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Waterfront Residences">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="project-card" data-name="AP Green Valley" data-location="Powai" data-status="ready" data-type="residential" data-bhk="2,3" data-price="2.1">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop" alt="AP Green Valley">
+                        <div class="project-tag">Ready to Move</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Green Valley</h3>
+                        <p>Powai | Eco-friendly homes surrounded by lakes and parks.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Powai Lake</span>
+                            <span><i class="fas fa-leaf"></i> Green Building</span>
+                        </div>
+                        <div class="project-price">Starting ₹2.1 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Green Valley">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card" data-name="AP Retail Arcade" data-location="Malad West" data-status="ongoing" data-type="commercial" data-bhk="retail" data-price="1.5">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1556909114-44e5faefec6b?w=400&h=300&fit=crop" alt="AP Retail Arcade">
+                        <div class="project-tag">Commercial</div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AP Retail Arcade</h3>
+                        <p>Malad West | High-street retail spaces with high footfall.</p>
+                        <div class="project-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Link Road</span>
+                            <span><i class="fas fa-shopping-bag"></i> 50+ Brands</span>
+                        </div>
+                        <div class="project-price">Shops from ₹1.5 Cr*</div>
+                        <a href="#" class="btn-small inquire-btn" data-project="AP Retail Arcade">Inquire Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No projects found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+                <button id="clearFiltersBtn" class="btn-primary" style="margin-top: 20px;">Clear Filters</button>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </section>
+
+    <!-- Inquiry Modal (Lightbox) -->
+    <div id="inquiryModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; justify-content: center; align-items: center;">
+        <div style="background: var(--bg-primary); border-radius: 20px; max-width: 500px; width: 90%; padding: 30px; position: relative; animation: fadeUp 0.3s ease;">
+            <button id="closeModal" style="position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary);">&times;</button>
+            <h3 style="margin-bottom: 10px;">Request Information</h3>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Get details for <strong id="modalProjectName"></strong></p>
+            <form id="inquiryForm">
+                <input type="hidden" id="inquiryProject">
+                <input type="text" placeholder="Your Name" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-primary); color: var(--text-primary);">
+                <input type="email" placeholder="Email Address" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-primary); color: var(--text-primary);">
+                <input type="tel" placeholder="Phone Number" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-primary); color: var(--text-primary);">
+                <button type="submit" class="btn-primary" style="width: 100%;">Submit Request <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script src="style.css"></script>
+    <script>
+        // Theme Toggle (Day/Night)
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        if(localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-theme');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+        });
+        
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // ========== PROJECT FILTERING SYSTEM ==========
+        const allProjects = Array.from(document.querySelectorAll('.project-card'));
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const bhkFilter = document.getElementById('bhkFilter');
+        const resetBtn = document.getElementById('resetFilters');
+        const projectsCountSpan = document.getElementById('displayCount');
+        const totalCountSpan = document.getElementById('totalCount');
+        const projectsGrid = document.getElementById('allProjectsGrid');
+        const noResultsDiv = document.getElementById('noResults');
+        
+        let currentPage = 1;
+        const projectsPerPage = 6;
+        let filteredProjects = [...allProjects];
+        
+        function updateProjectCount() {
+            const visible = allProjects.filter(p => p.style.display !== 'none').length;
+            projectsCountSpan.textContent = visible;
+            totalCountSpan.textContent = allProjects.length;
+        }
+        
+        function filterProjects() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const status = statusFilter.value;
+            const type = typeFilter.value;
+            const bhk = bhkFilter.value;
+            
+            filteredProjects = allProjects.filter(project => {
+                const name = project.getAttribute('data-name')?.toLowerCase() || '';
+                const location = project.getAttribute('data-location')?.toLowerCase() || '';
+                const projectStatus = project.getAttribute('data-status') || '';
+                const projectType = project.getAttribute('data-type') || '';
+                const projectBhk = project.getAttribute('data-bhk') || '';
+                
+                const matchesSearch = searchTerm === '' || name.includes(searchTerm) || location.includes(searchTerm);
+                const matchesStatus = status === 'all' || projectStatus === status;
+                const matchesType = type === 'all' || projectType === type;
+                let matchesBhk = bhk === 'all';
+                if (!matchesBhk && bhk !== 'all') {
+                    if (bhk === '4' && (projectBhk.includes('4') || projectBhk.includes('4+'))) matchesBhk = true;
+                    else if (projectBhk.includes(bhk)) matchesBhk = true;
+                }
+                
+                return matchesSearch && matchesStatus && matchesType && matchesBhk;
+            });
+            
+            currentPage = 1;
+            displayProjects();
+            updatePagination();
+            updateProjectCount();
+            
+            const noResults = filteredProjects.length === 0;
+            noResultsDiv.style.display = noResults ? 'block' : 'none';
+            projectsGrid.style.display = noResults ? 'none' : 'grid';
+            if (noResults) projectsGrid.style.display = 'none';
+            else projectsGrid.style.display = 'grid';
+        }
+        
+        function displayProjects() {
+            const start = (currentPage - 1) * projectsPerPage;
+            const end = start + projectsPerPage;
+            const projectsToShow = filteredProjects.slice(start, end);
+            
+            allProjects.forEach(project => {
+                project.style.display = 'none';
+            });
+            
+            projectsToShow.forEach(project => {
+                project.style.display = 'block';
+            });
+        }
+        
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+            const paginationDiv = document.getElementById('pagination');
+            paginationDiv.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.classList.add('page-btn');
+                if (i === currentPage) btn.classList.add('active');
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayProjects();
+                    updatePagination();
+                    window.scrollTo({ top: 500, behavior: 'smooth' });
+                });
+                paginationDiv.appendChild(btn);
+            }
+        }
+        
+        function resetFilters() {
+            searchInput.value = '';
+            statusFilter.value = 'all';
+            typeFilter.value = 'all';
+            bhkFilter.value = 'all';
+            filterProjects();
+        }
+        
+        searchInput.addEventListener('input', filterProjects);
+        statusFilter.addEventListener('change', filterProjects);
+        typeFilter.addEventListener('change', filterProjects);
+        bhkFilter.addEventListener('change', filterProjects);
+        resetBtn.addEventListener('click', resetFilters);
+        document.getElementById('clearFiltersBtn')?.addEventListener('click', resetFilters);
+        
+        // Initialize
+        filterProjects();
+        
+        // ========== INQUIRY MODAL ==========
+        const modal = document.getElementById('inquiryModal');
+        const modalProjectName = document.getElementById('modalProjectName');
+        const inquiryProject = document.getElementById('inquiryProject');
+        const closeModal = document.getElementById('closeModal');
+        const inquiryForm = document.getElementById('inquiryForm');
+        
+        document.querySelectorAll('.inquire-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectName = btn.getAttribute('data-project');
+                modalProjectName.textContent = projectName;
+                inquiryProject.value = projectName;
+                modal.style.display = 'flex';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.style.display = 'none';
+        });
+        
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = inquiryForm.querySelector('input[placeholder="Your Name"]').value;
+            const email = inquiryForm.querySelector('input[placeholder="Email Address"]').value;
+            const phone = inquiryForm.querySelector('input[placeholder="Phone Number"]').value;
+            const project = inquiryProject.value;
+            
+            alert(`Thank you ${name}! Our real estate expert will contact you shortly about ${project}.`);
+            inquiryForm.reset();
+            modal.style.display = 'none';
+        });
+        
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.project-card, .amenity-card, .offering-item');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        animateElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+        
+        document.querySelectorAll('.animate-fade-up').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    </script>
+</body>
+</html>
